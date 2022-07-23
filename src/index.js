@@ -20,10 +20,10 @@ const renderTime = ({ remainingTime }) => {
 
 const options = [10, 20, 30, 40, 50];
 
-const SetlectReset = ({ onClickReset }) => {
+const SetlectReset = ({ onClickReset, handleChange }) => {
   return (
     <div style={{ display: "flex" }}>
-      <select>
+      <select onChange={handleChange}>
         {options.map((opt) => (
           <option value={opt} key={opt}>
             {opt + " sec"}
@@ -39,6 +39,11 @@ function App() {
   const [value, setValue] = useState(0);
   const onClickReset = () => {
     setValue((prepValue) => prepValue + 1);
+  };
+
+  const [option, setOption] = useState(10);
+  const handleChange = (e) => {
+    setOption(() => e.target.value);
   };
 
   return (
@@ -58,13 +63,13 @@ function App() {
         <CountdownCircleTimer
           key={value}
           isPlaying
-          duration={10}
+          duration={option}
           colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
           onComplete={() => [true, 1000]}
         >
           {renderTime}
         </CountdownCircleTimer>
-        <SetlectReset onClickReset={onClickReset} />
+        <SetlectReset onClickReset={onClickReset} handleChange={handleChange} />
         <h3>Can you get this reset button to work?</h3>
         <h4>
           The reset button should reset as per the time selected in the dropdown
